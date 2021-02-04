@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/like?serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+  jackson:
+    time-zone: GMT+8
+    #为空就不序列化
+    default-property-inclusion: non_null
+    #日期类型转换成时间戳返回，不然会报错String不能转Date
+    serialization:
+      write-dates-as-timestamps: true
+  redis:
+    host: localhost
+    port: 6379
+  activemq:
+    broker-url: tcp://127.0.0.1:61616
+    user: admin
+    password: admin
+    pool:
+      enabled: true
+    #在源码中为了避免收到恶意代码，引入了安全机制，只允许指定的包里的对象能够被传输。
+    #所以也就是说自定义的对象不在默认的指定包里，下面启用全部包
+    packages:
+      trust-all: true
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mybatis/mapper/*.xml
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhy.like.mapper.LikeMapper">
+
+    <update id="update">
+        update user_like
+        set type=#{type}
+        where like_id = #{likeId};
+    </update>
+
+    <select id="findAllExistUserIdByTypeAndTypeId" resultType="java.lang.String">
+        select user_id
+        from user_like
+        where type=#{type} and type_id=#{typeId}
+    </select>
+
+    <insert id="save">
+        INSERT INTO user_like(type, type_id, status, user_id,like_time)
+        VALUES
+        <foreach collection="list" item="item" separator=" , " index="index">
+            (#{item.type}, #{item.typeId}, #{item.status}, #{item.userId},#{item.likeTime})
+        </foreach>
+    </insert>
+
+    <delete id="conditionalDelete">
+        DELETE
+        FROM
+            user_like
+        WHERE
+              <foreach collection="list" item="item" separator=" or " index="index">
+                  (type=#{item.type} and type_id=#{item.typeId} and user_id=#{userId})
+              </foreach>
+
+    </delete>
+</mapper>
